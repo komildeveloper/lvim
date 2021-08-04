@@ -26,7 +26,7 @@ M.config = function()
     name = "Boolean",
     strlist = { "True", "False" },
   }
-  table.insert(ial.config.searchlist.normal, "custom#Boolean")
+  table.insert(dial.config.searchlist.normal, "custom#Boolean")
 end
 
 return M
