@@ -1,1 +1,1 @@
-# My lvim config
+# My lvim Config
