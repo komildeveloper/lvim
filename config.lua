@@ -1,30 +1,16 @@
--- THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
-
 -- general
-lvim.format_on_save = true
-lvim.lint_on_save = true
-lvim.colorscheme = "spacedark"
+lvim.format_on_save = false
+lvim.colorscheme = "darkplus"
+lvim.transparent_window = false
 vim.opt.wrap = false
+lvim.debug = false
 
 -- keymappings
 lvim.leader = "space"
--- overwrite the key-mappings provided by LunarVim for any mode, or leave it empty to keep them
--- lvim.keys.normal_mode = {
---   Page down/up
---   {'[d', '<PageUp>'},
---   {']d', '<PageDown>'},
---
---   Navigate buffers
---   {'<Tab>', ':bnext<CR>'},
---   {'<S-Tab>', ':bprevious<CR>'},
--- }
--- if you just want to augment the existing ones then use the utility function
--- require("utils").add_keymap_insert_mode({ silent = true }, {
--- { "<C-s>", ":w<cr>" },
--- { "<C-c>", "<ESC>" },
--- })
--- you can also use the native vim way directly
--- vim.api.nvim_set_keymap("i", "<C-Space>", "compe#complete()", { noremap = true, silent = true, expr = true })
+
+lvim.keys.normal_mode["<esc><esc>"] = "<cmd>nohlsearch<cr>"
+lvim.keys.normal_mode["Y"] = "y$"
+lvim.keys.visual_mode["p"] = [["_dP]]
 
 -- LSP
 lvim.lsp.diagnostics.virtual_text = false
@@ -39,6 +25,8 @@ lvim.builtin.terminal.active = true
 lvim.builtin.which_key.mappings.l.d = { "<cmd>TroubleToggle<cr>", "Diagnostics" }
 lvim.builtin.which_key.mappings.l.R = { "<cmd>TroubleToggle lsp_references<cr>", "References" }
 lvim.builtin.which_key.mappings.l.o = { "<cmd>SymbolsOutline<cr>", "Outline" }
+lvim.builtin.which_key.mappings.T.h = { "<cmd>TSHighlightCapturesUnderCursor<cr>", "Highlight" }
+lvim.builtin.which_key.mappings.T.p = { "<cmd>TSPlaygroundToggle<cr>", "Playground" }
 lvim.builtin.which_key.mappings["z"] = { "<cmd>ZenMode<cr>", "Zen" }
 lvim.builtin.which_key.mappings["r"] = {
   name = "Replace",
@@ -48,45 +36,34 @@ lvim.builtin.which_key.mappings["r"] = {
 }
 lvim.builtin.which_key.mappings.f = { "<cmd>lua require('lir.float').toggle()<cr>", "Files" }
 
--- TODO: User Config for predefined plugins
--- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
-lvim.builtin.dashboard.active = true
-lvim.builtin.terminal.active = true
-lvim.builtin.nvimtree.side = "left"
-lvim.builtin.nvimtree.show_icons.git = 1
-lvim.builtin.nvimtree.hide_dotfiles = 0
-lvim.builtin.nvimtree.ignore = {
-  [1] = ".git"
-}
+lvim.builtin.nvimtree.auto_open = 0
+-- vim.g.nvim_tree_disable_netrw = 0
+-- vim.g.nvim_tree_hijack_netrw = 0
 
-lvim.builtin.treesitter.ensure_installed = {}
--- if you don't want all the parsers change this to a table of the ones you want
-lvim.builtin.treesitter.ensure_installed = {}
-lvim.builtin.treesitter.highlight.enabled = true
-
--- generic LSP settings
--- you can set a custom on_attach function that will be used for all the language servers
--- See <https://github.com/neovim/nvim-lspconfig#keybindings-and-completion>
--- lvim.lsp.on_attach_callback = function(client, bufnr)
---   local function buf_set_option(...)
---     vim.api.nvim_buf_set_option(bufnr, ...)
---   end
---   --Enable completion triggered by <c-x><c-o>
---   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
--- end
+-- Treesitter
+lvim.builtin.treesitter.ensure_installed = "maintained"
+lvim.builtin.treesitter.autotag.enable = true
+lvim.builtin.treesitter.playground.enable = true
 
 -- Additional Plugins
--- lvim.plugins = {
---     {"folke/tokyonight.nvim"}, {
---         "ray-x/lsp_signature.nvim",
---         config = function() require"lsp_signature".on_attach() end,
---         event = "InsertEnter"
---     }
--- }
-
 lvim.plugins = {
   { "lunarvim/colorschemes" },
   { "mfussenegger/nvim-jdtls" },
+  -- {
+  --   "abecodes/tabout.nvim",
+  --   config = function()
+  --     require("user.tabout").config()
+  --   end,
+  --   wants = { "nvim-treesitter" }, -- or require if not used so far
+  --   after = { "nvim-compe", "vim-vsnip" }, -- if a completion plugin is using tabs load it before
+  -- },
+  {
+    "pwntester/octo.nvim",
+    event = "BufRead",
+    config = function()
+      require("user.octo").config()
+    end,
+  },
   {
     "ray-x/lsp_signature.nvim",
     event = "InsertEnter",
@@ -106,7 +83,13 @@ lvim.plugins = {
       require "user.rnvimr"
     end,
   },
-
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    -- event = "BufReadPre",
+    config = function()
+      require "user.blankline"
+    end,
+  },
   {
     "ruifm/gitlinker.nvim",
     event = "BufRead",
@@ -179,6 +162,19 @@ lvim.plugins = {
       require("user.zen").config()
     end,
   },
+  {
+    "karb94/neoscroll.nvim",
+    config = function()
+      require("user.neoscroll").config()
+    end,
+  },
+
+  -- TODO: maybe oneday
+  -- { "gelguy/wilder.nvim",
+  --   config = function ()
+  --     vim.cmd("source $HOME/.config/lvim/lua/user/wilder.vim")
+  --   end
+  -- },
   -- {
   --   "folke/twilight.nvim",
   --   config = function()
@@ -221,9 +217,9 @@ lvim.plugins = {
   },
 }
 
+-- TODO: q quits in spectr_panel ft
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
--- lvim.autocommands.custom_groups = {
---   { "BufWinEnter", "*.lua", "setlocal ts=8 sw=8" },
--- }
+-- O.user_autocommands = {{ "BufWinEnter", "*", "echo \"hi again\""}}
 
--- Additional Leader bindings for WhichKey
+-- way to get os name
+-- print(vim.loop.os_uname().sysname)
