@@ -21,7 +21,7 @@ M.config = function()
       },
       ["enter_file"] = {
         map = "<cr>",
-        cm = "<cmd>lua require('spectre.actions').select_entry()<CR>",
+        cmd = "<cmd>lua require('spectre.actions').select_entry()<CR>",
         desc = "goto current file",
       },
       ["send_to_qf"] = {
