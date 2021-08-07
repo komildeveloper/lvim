@@ -7,7 +7,7 @@ lvim.lang.css.formatters = {
 
 lvim.lang.css.linters = {
   {
-    exe = "eslint_d",
+    exe = "stylelint",
     args = {},
   },
 }
