@@ -7,7 +7,7 @@ lvim.lang.javascriptreact.formatters = {
 
 lvim.lang.javascriptreact.linters = {
   {
-    exe = "eslint_d",
+    exe = "eslint",
     args = {},
   },
 }
