@@ -4,9 +4,3 @@ lvim.lang.typescriptreact.formatters = {
     args = {},
   },
 }
-lvim.lang.typescriptreact.linters = {
-  {
-    exe = "eslint_d",
-    args = {},
-  },
-}
