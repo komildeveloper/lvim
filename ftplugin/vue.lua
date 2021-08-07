@@ -6,7 +6,7 @@ lvim.lang.vue.formatters = {
 }
 lvim.lang.vue.linters = {
   {
-    exe = "eslint_d",
+    exe = "eslint",
     args = {},
   },
 }
