@@ -4,10 +4,3 @@ lvim.lang.html.formatters = {
     args = {},
   },
 }
-
-lvim.lang.html.linters = {
-  {
-    exe = "eslint_d",
-    args = {},
-  },
-}
