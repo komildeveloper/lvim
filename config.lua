@@ -1,5 +1,5 @@
 -- general
-lvim.format_on_save = false
+lvim.format_on_save = true
 lvim.colorscheme = "darkplus"
 lvim.transparent_window = false
 vim.opt.wrap = false
