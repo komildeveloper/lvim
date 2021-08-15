@@ -33,7 +33,7 @@ M.config = function()
     --       IndentBlanklineDisable
     --       ]]
     -- end,
-    -- on_close = function()
+    -- on_close = fnction()
     --   vim.lsp.diagnostic.enable()
     --   vim.cmd [[
     --       set foldlevel=5
