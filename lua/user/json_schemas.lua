@@ -39,7 +39,7 @@ M.setup = function()
       url = "http://json.schemastore.org/prettierrc",
     },
     {
-      description = "Vercel Now config",
+      descriptin = "Vercel Now config",
       fileMatch = { "now.json" },
       url = "http://json.schemastore.org/now",
     },
