@@ -69,7 +69,7 @@ M.config = function()
         args = {
           "--color=never",
           "--no-heading",
-          "--with-filename",
+          "-with-filename",
           "--line-number",
           "--column",
         },
