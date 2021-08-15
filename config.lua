@@ -52,6 +52,15 @@ lvim.builtin.treesitter.ensure_installed = "all"
 lvim.builtin.treesitter.autotag.enable = true
 lvim.builtin.treesitter.playground.enable = true
 
+-- Telescope
+lvim.builtin.telescope.on_config_done = function()
+  local actions = require "telescope.actions"
+  lvim.builtin.telescope.defaults.mappings.i["<C-j>"] = actions.move_selection_next
+  lvim.builtin.telescope.defaults.mappings.i["<C-k>"] = actions.move_selection_previous
+  lvim.builtin.telescope.defaults.mappings.i["<C-n>"] = actions.cycle_history_next
+  lvim.builtin.telescope.defaults.mappings.i["<C-p>"] = actions.cycle_history_prev
+end
+
 -- Additional Plugins
 lvim.plugins = {
   { "lunarvim/colorschemes" },
@@ -175,7 +184,20 @@ lvim.plugins = {
       require("user.neoscroll").config()
     end,
   },
-
+  {
+    "vuki656/package-info.nvim",
+    config = function()
+      require "user.package-info"
+    end,
+    ft = "json",
+  },
+  {
+    "rcarriga/nvim-notify",
+    event = "BufRead",
+    config = function()
+      require("user.notify").config()
+    end,
+  },
   -- TODO: maybe oneday
   -- { "gelguy/wilder.nvim",
   --   config = function ()
@@ -189,6 +211,9 @@ lvim.plugins = {
   --   end,
   --   -- cmd = "ZenMode",
   -- },
+  {
+    "dccsillag/magma-nvim",
+  },
   {
     "simrat39/symbols-outline.nvim",
     cmd = "SymbolsOutline",
