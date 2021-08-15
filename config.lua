@@ -1,6 +1,6 @@
 -- general
 lvim.format_on_save = true
-lvim.colorscheme = "onedark"
+lvim.colorscheme = "aurora"
 lvim.transparent_window = false
 vim.opt.wrap = false
 lvim.debug = false
