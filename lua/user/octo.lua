@@ -52,7 +52,7 @@ M.config = function()
         list_commits = "<space>pc", -- list PR commits
         list_changed_files = "<space>pf", -- list PR changed files
         show_pr_diff = "<space>pd", -- show PR diff
-        add_reviewer = "<space>va", -- add reviewer
+        add_reviewer = "<space>a", -- add reviewer
         remove_reviewer = "<space>vd", -- remove reviewer request
         close_issue = "<space>ic", -- close PR
         reopen_issue = "<space>io", -- reopen PR
@@ -80,7 +80,7 @@ M.config = function()
         react_confused = "<space>rc", -- add/remove 😕 reaction
       },
       review_thread = {
-        goto_issue = "<space>i", -- navigate to a local repo issue
+        goto_issue = "<space>gi", -- navigate to a local repo issue
         add_comment = "<space>ca", -- add comment
         add_suggestion = "<space>sa", -- add suggestion
         delete_comment = "<space>cd", -- delete comment
