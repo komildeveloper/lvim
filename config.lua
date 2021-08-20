@@ -1,8 +1,8 @@
 -- general
 lvim.format_on_save = true
-lvim.colorscheme = "aurora"
+lvim.colorscheme = "darkplus"
 lvim.transparent_window = false
-vim.opt.wrap = false
+vim.opt.wrap = true
 lvim.debug = false
 
 -- keymappings
