@@ -1,9 +1,12 @@
 -- general
-lvim.format_on_save = true
-lvim.colorscheme = "darkplus"
+lvim.colorscheme = "onedarker"
+lvim.format_on_save = false
 lvim.transparent_window = false
-vim.opt.wrap = true
+vim.opt.wrap = false
 lvim.debug = false
+
+-- vim.g.loaded_netrw = 1
+-- vim.g.loaded_netrwPlugin = 1
 
 -- keymappings
 lvim.leader = "space"
@@ -20,6 +23,8 @@ require("user.json_schemas").setup()
 -- Builtins
 lvim.builtin.dashboard.active = true
 lvim.builtin.terminal.active = true
+lvim.builtin.dap.active = true
+lvim.builtin.bufferline.active = true
 
 -- Whichkey
 lvim.builtin.which_key.mappings.l.d = { "<cmd>TroubleToggle<cr>", "Diagnostics" }
@@ -63,7 +68,9 @@ end
 
 -- Additional Plugins
 lvim.plugins = {
-  { "lunarvim/colorschemes" },
+  -- { "lunarvim/colorschemes" },
+  -- { "lunarvim/onedarker" },
+  { "folke/tokyonight.nvim" },
   { "mfussenegger/nvim-jdtls" },
   -- {
   --   "abecodes/tabout.nvim",
@@ -71,7 +78,7 @@ lvim.plugins = {
   --     require("user.tabout").config()
   --   end,
   --   wants = { "nvim-treesitter" }, -- or require if not used so far
-  --   after = { "nvim-compe", "vim-vsnip" }, -- if a completion plugin is using tabs load it before
+  --   after = { "nim-compe", "vim-vsnip" }, -- if a completion plugin is using tabs load it before
   -- },
   {
     "pwntester/octo.nvim",
@@ -158,13 +165,13 @@ lvim.plugins = {
       require("user.colorizer").config()
     end,
   },
-  {
-    "nvim-telescope/telescope-project.nvim",
-    event = "BufWinEnter",
-    setup = function()
-      vim.cmd [[packadd telescope.nvim]]
-    end,
-  },
+  -- {
+  --   "nvim-telescope/telescope-project.nvim",
+  --   event = "BufWinEnter",
+  --   setup = function()
+  --     vim.cmd [[packadd telescope.nvim]]
+  --   end,
+  -- },
   {
     "windwp/nvim-spectre",
     event = "BufRead",
@@ -198,6 +205,13 @@ lvim.plugins = {
       require("user.notify").config()
     end,
   },
+  {
+    "simrat39/symbols-outline.nvim",
+    -- cmd = "SymbolsOutline",
+    config = function()
+      require("user.outline").config()
+    end,
+  },
   -- TODO: maybe oneday
   -- { "gelguy/wilder.nvim",
   --   config = function ()
@@ -213,10 +227,6 @@ lvim.plugins = {
   -- },
   {
     "dccsillag/magma-nvim",
-  },
-  {
-    "simrat39/symbols-outline.nvim",
-    cmd = "SymbolsOutline",
   },
   {
     "metakirby5/codi.vim",
