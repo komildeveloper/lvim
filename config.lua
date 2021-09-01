@@ -1,9 +1,9 @@
 -- general
 lvim.colorscheme = "onedarker"
-lvim.format_on_save = false
+lvim.format_on_save = true
 lvim.transparent_window = false
-vim.opt.wrap = false
-lvim.debug = false
+vim.opt.wrap = true
+lvim.debug = true
 
 -- vim.g.loaded_netrw = 1
 -- vim.g.loaded_netrwPlugin = 1
