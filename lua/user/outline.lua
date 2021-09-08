@@ -40,7 +40,7 @@ M.config = function()
       Constant = { icon = "ﲀ", hl = "TSConstant" },
       String = { icon = "", hl = "TSString" },
       Number = { icon = "#", hl = "TSNumber" },
-      Booean = { icon = "⊨", hl = "TSBoolean" },
+      Boolean = { icon = "⊨", hl = "TSBoolean" },
       Array = { icon = "", hl = "TSConstant" },
       Object = { icon = "⦿", hl = "TSType" },
       Key = { icon = "", hl = "TSType" },
