@@ -32,6 +32,16 @@ lvim.builtin.which_key.mappings.l.R = { "<cmd>TroubleToggle lsp_references<cr>",
 lvim.builtin.which_key.mappings.l.o = { "<cmd>SymbolsOutline<cr>", "Outline" }
 lvim.builtin.which_key.mappings.T.h = { "<cmd>TSHighlightCapturesUnderCursor<cr>", "Highlight" }
 lvim.builtin.which_key.mappings.T.p = { "<cmd>TSPlaygroundToggle<cr>", "Playground" }
+
+lvim.builtin.which_key.mappings.g["G"] = {
+  name = "Gist",
+  a = { "<cmd>Gist -b -a<cr>", "Create Anon" },
+  d = { "<cmd>Gist -d<cr>", "Delete" },
+  f = { "<cmd>Gist -f<cr>", "Fork" },
+  g = { "<cmd>Gist -b<cr>", "Create" },
+  l = { "<cmd>Gist -l<cr>", "List" },
+  p = { "<cmd>Gist -b -p<cr>", "Create Private" },
+}
 lvim.builtin.which_key.mappings["z"] = { "<cmd>ZenMode<cr>", "Zen" }
 lvim.builtin.which_key.mappings["r"] = {
   name = "Replace",
@@ -39,8 +49,8 @@ lvim.builtin.which_key.mappings["r"] = {
   w = { "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", "Replace Word" },
   f = { "<cmd>lua require('spectre').open_file_search()<cr>", "Replace Buffer" },
 }
-lvim.builtin.which_key.mappings.f = { "<cmd>lua require('lir.float').toggle()<cr>", "Files" }
 
+lvim.builtin.which_key.mappings.f = { "<cmd>lua require('lir.float').toggle()<cr>", "Files" }
 lvim.builtin.nvimtree.auto_open = 0
 -- vim.g.nvim_tree_disable_netrw = 0
 -- vim.g.nvim_tree_hijack_netrw = 0
@@ -69,16 +79,16 @@ end
 -- Additional Plugins
 lvim.plugins = {
   -- { "lunarvim/colorschemes" },
-  -- { "lunarvim/onedarker" },
-  { "folke/tokyonight.nvim" },
+  -- { "folke/tokyonight.nvim" },
   { "mfussenegger/nvim-jdtls" },
+  { "ChristianChiarulli/vim-solidity" },
   -- {
   --   "abecodes/tabout.nvim",
   --   config = function()
   --     require("user.tabout").config()
   --   end,
   --   wants = { "nvim-treesitter" }, -- or require if not used so far
-  --   after = { "nim-compe", "vim-vsnip" }, -- if a completion plugin is using tabs load it before
+  --   after = { "nvim-compe", "vim-vsnip" }, -- if a completion plugin is using tabs load it before
   -- },
   {
     "pwntester/octo.nvim",
@@ -87,13 +97,13 @@ lvim.plugins = {
       require("user.octo").config()
     end,
   },
-  {
-    "ray-x/lsp_signature.nvim",
-    event = "InsertEnter",
-    config = function()
-      require("user.lsp_signature").config()
-    end,
-  },
+  -- {
+  --   "ray-x/lsp_signature.nvim",
+  --   event = "InsertEnter",
+  --   config = function()
+  --     require("user.lsp_signature").config()
+  --   end,
+  -- },
   {
     "unblevable/quick-scope",
     config = function()
@@ -128,9 +138,19 @@ lvim.plugins = {
     end,
   },
   {
+    -- Note for this to work you need to create a pat and put it in `~/.gist-vim` as <token XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX>
+    -- You will also need to set github username like:
+    --
+    -- [user]
+    --	 email = chris.machine@pm.me
+    --   name = Christian Chiarulli
+    -- [github]
+    --   user = ChristianChiarulli
     "mattn/vim-gist",
-    event = "BufRead",
     requires = "mattn/webapi-vim",
+    config = function()
+      vim.g.gist_open_browser_after_post = 1
+    end,
   },
   {
     "tamago324/lir.nvim",
@@ -225,6 +245,29 @@ lvim.plugins = {
   --   end,
   --   -- cmd = "ZenMode",
   -- },
+  --
+
+  {
+    "tzachar/cmp-tabnine",
+    config = function()
+      local tabnine = require "cmp_tabnine.config"
+      tabnine:setup {
+        max_lines = 1000,
+        max_num_results = 20,
+        sort = true,
+      }
+    end,
+
+    run = "./install.sh",
+    requires = "hrsh7th/nvim-cmp",
+  },
+  -- {
+  --   "tzachar/compe-tabnine",
+  --   run = "./install.sh",
+  --   requires = "hrsh7th/nvim-compe",
+  --   event = "InsertEnter",
+  --   disable = not lvim.builtin.tabnine.active,
+  -- },
   {
     "dccsillag/magma-nvim",
   },
@@ -259,9 +302,20 @@ lvim.plugins = {
   },
 }
 
+vim.cmd [[ au CmdWinEnter * quit ]]
 -- TODO: q quits in spectr_panel ft
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 -- O.user_autocommands = {{ "BufWinEnter", "*", "echo \"hi again\""}}
 
 -- way to get os name
 -- print(vim.loop.os_uname().sysname)
+
+-- *Must* be *S*olidity not solidity
+require("nvim-treesitter.parsers").get_parser_configs().solidity = {
+  install_info = {
+    url = "https://github.com/JoranHonig/tree-sitter-solidity",
+    files = { "src/parser.c" },
+    requires_generate_from_grammar = true,
+  },
+  filetype = "solidity",
+}
