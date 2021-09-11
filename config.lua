@@ -43,12 +43,6 @@ lvim.builtin.which_key.mappings.g["G"] = {
   p = { "<cmd>Gist -b -p<cr>", "Create Private" },
 }
 lvim.builtin.which_key.mappings["z"] = { "<cmd>ZenMode<cr>", "Zen" }
-lvim.builtin.which_key.mappings["r"] = {
-  name = "Replace",
-  r = { "<cmd>lua require('spectre').open()<cr>", "Replace" },
-  w = { "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", "Replace Word" },
-  f = { "<cmd>lua require('spectre').open_file_search()<cr>", "Replace Buffer" },
-}
 
 lvim.builtin.which_key.mappings.f = { "<cmd>lua require('lir.float').toggle()<cr>", "Files" }
 lvim.builtin.nvimtree.auto_open = 0
@@ -192,13 +186,6 @@ lvim.plugins = {
   --     vim.cmd [[packadd telescope.nvim]]
   --   end,
   -- },
-  {
-    "windwp/nvim-spectre",
-    event = "BufRead",
-    config = function()
-      require("user.spectre").config()
-    end,
-  },
   {
     "folke/zen-mode.nvim",
     config = function()
