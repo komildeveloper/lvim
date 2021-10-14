@@ -3,7 +3,7 @@ lvim.colorscheme = "onedarker"
 lvim.format_on_save = true
 lvim.transparent_window = false
 vim.opt.wrap = true
-lvim.debug = false
+lvim.debug = true
 
 -- vim.g.loaded_netrw = 1
 -- vim.g.loaded_netrwPlugin = 1
