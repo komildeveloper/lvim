@@ -125,13 +125,6 @@ lvim.plugins = {
     end,
   },
   {
-    "phaazon/hop.nvim",
-    event = "BufRead",
-    config = function()
-      require("user.hop").config()
-    end,
-  },
-  {
     -- Note for this to work you need to create a pat and put it in `~/.gist-vim` as <token XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX>
     -- You will also need to set github username like:
     --
