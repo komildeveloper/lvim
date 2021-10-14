@@ -3,7 +3,7 @@ lvim.colorscheme = "onedarker"
 lvim.format_on_save = true
 lvim.transparent_window = false
 vim.opt.wrap = true
-lvim.debug = true
+lvim.debug = false
 
 -- vim.g.loaded_netrw = 1
 -- vim.g.loaded_netrwPlugin = 1
@@ -12,19 +12,25 @@ lvim.debug = true
 lvim.leader = "space"
 
 lvim.keys.normal_mode["<esc><esc>"] = "<cmd>nohlsearch<cr>"
-lvim.keys.normal_mode["Y"] = "y$"
+-- lvim.keys.normal_mode["Y"] = "y$"
 lvim.keys.visual_mode["p"] = [["_dP]]
+
+-- for finding syntax ids for non TS enabled languages
+vim.cmd [[
+map <F3> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
+]]
 
 -- LSP
 lvim.lsp.diagnostics.virtual_text = false
 lvim.lsp.override = { "java" }
-require("user.json_schemas").setup()
+-- require("user.json_schemas").setup()
 
 -- Builtins
 lvim.builtin.dashboard.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.dap.active = true
 lvim.builtin.bufferline.active = true
+-- lvim.builtin.cmp.sources = {}
 
 -- Whichkey
 lvim.builtin.which_key.mappings.l.d = { "<cmd>TroubleToggle<cr>", "Diagnostics" }
@@ -43,23 +49,19 @@ lvim.builtin.which_key.mappings.g["G"] = {
   p = { "<cmd>Gist -b -p<cr>", "Create Private" },
 }
 lvim.builtin.which_key.mappings["z"] = { "<cmd>ZenMode<cr>", "Zen" }
-
-lvim.builtin.which_key.mappings.f = { "<cmd>lua require('lir.float').toggle()<cr>", "Files" }
-lvim.builtin.nvimtree.auto_open = 0
--- vim.g.nvim_tree_disable_netrw = 0
--- vim.g.nvim_tree_hijack_netrw = 0
-
-lvim.builtin.nvimtree.side = "left"
-lvim.builtin.nvimtree.show_icons.git = 1
-lvim.builtin.nvimtree.hide_dotfiles = 0
-lvim.builtin.nvimtree.ignore = {
-  [1] = ".git",
+lvim.builtin.which_key.mappings["r"] = {
+  name = "Replace",
+  r = { "<cmd>lua require('spectre').open()<cr>", "Replace" },
+  w = { "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", "Replace Word" },
+  f = { "<cmd>lua require('spectre').open_file_search()<cr>", "Replace Buffer" },
 }
+-- lvim.builtin.which_key.mappings.f = { "<cmd>lua require('lir.float').toggle()<cr>", "Files" }
 
 -- Treesitter
 lvim.builtin.treesitter.ensure_installed = "all"
 lvim.builtin.treesitter.autotag.enable = true
 lvim.builtin.treesitter.playground.enable = true
+lvim.builtin.treesitter.indent.disable = { "python" }
 
 -- Telescope
 lvim.builtin.telescope.on_config_done = function()
@@ -69,6 +71,11 @@ lvim.builtin.telescope.on_config_done = function()
   lvim.builtin.telescope.defaults.mappings.i["<C-n>"] = actions.cycle_history_next
   lvim.builtin.telescope.defaults.mappings.i["<C-p>"] = actions.cycle_history_prev
 end
+
+lvim.builtin.nvimtree.hide_dotfiles = 0
+lvim.builtin.nvimtree.ignore = {
+  [1] = ".git",
+}
 
 -- Additional Plugins
 lvim.plugins = {
@@ -82,7 +89,7 @@ lvim.plugins = {
   --     require("user.tabout").config()
   --   end,
   --   wants = { "nvim-treesitter" }, -- or require if not used so far
-  --   after = { "nvim-compe", "vim-vsnip" }, -- if a completion plugin is using tabs load it before
+  --   after = { "nvim-cmp", "LuaSnip" }, -- if a completion plugin is using tabs load it before
   -- },
   {
     "pwntester/octo.nvim",
@@ -98,12 +105,6 @@ lvim.plugins = {
   --     require("user.lsp_signature").config()
   --   end,
   -- },
-  {
-    "unblevable/quick-scope",
-    config = function()
-      require "user.quickscope"
-    end,
-  },
   {
     "kevinhwang91/rnvimr",
     config = function()
@@ -180,6 +181,13 @@ lvim.plugins = {
   --   end,
   -- },
   {
+    "windwp/nvim-spectre",
+    event = "BufRead",
+    config = function()
+      require("user.spectre").config()
+    end,
+  },
+  {
     "folke/zen-mode.nvim",
     config = function()
       require("user.zen").config()
@@ -191,13 +199,13 @@ lvim.plugins = {
       require("user.neoscroll").config()
     end,
   },
-  {
-    "vuki656/package-info.nvim",
-    config = function()
-      require "user.package-info"
-    end,
-    ft = "json",
-  },
+  -- {
+  --   "vuki656/package-info.nvim",
+  --   config = function()
+  --     require "user.package-info"
+  --   end,
+  --   ft = "json",
+  -- },
   {
     "rcarriga/nvim-notify",
     event = "BufRead",
