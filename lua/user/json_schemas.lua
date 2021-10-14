@@ -1,3 +1,5 @@
+
+  
 -- https://www.schemastore.org/json/
 local M = {}
 
@@ -39,7 +41,7 @@ M.setup = function()
       url = "http://json.schemastore.org/prettierrc",
     },
     {
-      descriptin = "Vercel Now config",
+      description = "Vercel Now config",
       fileMatch = { "now.json" },
       url = "http://json.schemastore.org/now",
     },
